@@ -1,0 +1,40 @@
+<nav class="bg-[#092442] p-4 text-white">
+  <h1 class="text-2xl">Galería de Imágenes</h1>
+</nav>
+
+<div class="">
+  <div class="container mx-auto mt-8">
+    <h2 class="text-3xl font-bold mb-4 shadow-md ">Mis Imágenes</h2>
+    <div *ngIf="imagenes.length === 0" class="text-center text-gray-500">
+      <p class="mb-4">Ninguna imagen cargada aún</p>
+      <div class="grid md:grid-cols-3 lg:grid-cols-4 gap-4">
+        <div *ngFor="let skeleton of [1, 2, 3, 4]" class="relative bg-gray-200 shadow-md rounded-lg overflow-hidden animate-pulse">
+          <div class="w-full h-48 bg-gray-300"></div>
+          <div class="p-4">
+            <p class="bg-gray-300 h-4 mb-2"></p>
+            <p class="bg-gray-300 h-4"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="imagenes.length > 0" class="grid md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div *ngFor="let imagen of imagenes; let i = index" class="relative bg-white shadow-md rounded-lg overflow-hidden">
+        <img [src]="imagen.src" class="w-full h-48 object-cover" (click)="verDetalle(imagen)" alt="d"/>
+        <div class="p-4">
+          <p class="text-gray-700">{{ imagen.descripcion }}</p>
+          <button (click)="eliminarImagen(i)" class="absolute top-0 right-0 bg-red-500 text-white p-1 rounded-full">Eliminar</button>
+        </div>
+      </div>
+    </div>
+    <button (click)="abrirModalAgregar()" class="fixed bottom-1 right-0 bg-green-500 text-white m-20 p-5 shadow-lg">
+      <span class="text-2xl">+</span>
+    </button>
+  </div>
+</div>
+
+<app-imagen-detalle *ngIf="imagenSeleccionada" [imagen]="imagenSeleccionada" (cerrar)="cerrarDetalle()"></app-imagen-detalle>
+<app-imagen-create *ngIf="modalAgregarAbierto" (cerrar)="cerrarModalAgregar()" (imagenAgregada)="onImagenAgregada($event)"></app-imagen-create>
+
+<footer class="bg-[#092442] p-4 text-white fixed bottom-0 w-full text-center">
+  <p>ITLA © 2024 - Leandro Batista </p>
+</footer>
